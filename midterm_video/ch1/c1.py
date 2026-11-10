@@ -40,7 +40,7 @@ class Intro1(VScene):
         kp = VGroup(tx(r"\textbf{Kerckhoffs' principle} (1883)", 38, HL),
                     tx(r"The method may fall into enemy hands. \ Only the \emph{key} is secret.", 34),
                     tx(r"So: Eve knows Enc and Dec. \ She does not know $k$.", 34, GREY_A)).arrange(DOWN, buff=0.35)
-        with self.vo("A rule we always follow is Kerckhoffs' principle. Assume the enemy knows exactly how the "
+        with self.vo("One rule we always follow is Kerckhoffs' principle. Assume the enemy knows exactly how the "
                      "scheme works, the encryption and decryption algorithms. The only secret is the key."):
             self.play(LaggedStart(*[FadeIn(x, shift=0.2 * UP) for x in kp], lag_ratio=0.4))
         self.clear_all()
@@ -221,10 +221,12 @@ class Vig1(VScene):
             self.play(FadeIn(t3[0]))
             self.play(Indicate(VGroup(r0[0], r0[3], r1[0], r1[3]), color=HL))
             self.play(FadeIn(t3[1]), FadeIn(t3[2]))
-        t4 = VGroup(tx(r"$\ell \ge 4$: every position has its \emph{own} uniform shift", 30, HL),
-                    tx(r"each $c_i$ is uniform no matter the message $\Rightarrow$ \textbf{can't} tell", 30, BAD)).arrange(DOWN, buff=0.18, aligned_edge=LEFT)
-        t4.next_to(r1, DOWN, buff=0.7).to_edge(LEFT, buff=0.7)
-        with self.vo("Key length four or more. A four letter message never reuses a shift. Each ciphertext letter is "
+        t4 = VGroup(tx(r"$\ell \ge 4$: each position has", 30, HL),
+                    tx(r"its \emph{own} uniform shift", 30, HL),
+                    tx(r"every $c_i$ is uniform either way", 30, BAD),
+                    tx(r"$\Rightarrow$ Eve \textbf{can't} tell", 30, BAD)).arrange(DOWN, buff=0.15, aligned_edge=LEFT)
+        t4.next_to(VGroup(r0, r1, l0, l1), DOWN, buff=0.7).align_to(l0, LEFT)
+        with self.vo("Key length four or more. Then a four letter message never reuses a shift. Each ciphertext letter is "
                      "its message letter plus its own independent uniform shift, so it's uniformly random either "
                      "way. Both messages produce exactly the same ciphertext distribution, and Eve can't do better "
                      "than guessing."):
@@ -266,7 +268,7 @@ class PS1(VScene):
                       tx(r"repeated letter \texttt{TT} $\Rightarrow$ the message has a repeated letter $\Rightarrow$ \texttt{BUY AAPL}", 30),
                       M(r"\textbf{posterior: } \Pr[M = \texttt{BUY AAPL} \mid c] = 1 \neq \tfrac16", font_size=36, color=BAD)).arrange(DOWN, buff=0.3)
         seen.next_to(prior, DOWN, buff=0.6)
-        with self.vo("Now Eve sees a substitution cipher ciphertext, W N X, T T A D. A substitution maps equal letters "
+        with self.vo("Now Eve sees a substitution cipher ciphertext, W N X, T T A D. Any substitution maps equal letters "
                      "to equal letters, so a repeated T in the ciphertext means a repeated letter in the message. Only "
                      "buy Apple has one. Eve's belief, the posterior, jumped from one sixth to one. The ciphertext "
                      "leaked information.") as d:
@@ -303,7 +305,7 @@ class Ex16(VScene):
                      "Apple has a repeated A, which would produce a repeated letter, so it's impossible. Its "
                      "posterior is zero.") as d:
             self.play(FadeIn(s1[0]))
-        with self.vo("The other two messages each have seven distinct letters. A random permutation sends them to "
+        with self.vo("The other two messages each have seven distinct letters. Then a random permutation sends them to "
                      "this exact ciphertext with the same small probability. Call it q. The exact value won't matter."):
             self.play(FadeIn(s1[1]))
             self.play(FadeIn(s1[2]))
@@ -473,7 +475,7 @@ class Shannon1(VScene):
         msgs = VGroup(*[Dot(RIGHT * 2.5 + UP * (1.2 - 0.6 * i), color=MSG) for i in range(6)])
         ml = VGroup(*[tx(f"$m_{i + 1}$", 26, MSG).next_to(d, RIGHT) for i, d in enumerate(msgs)])
         lines = VGroup(*[Line(cstar.get_center(), d.get_center(), color=KEY, stroke_width=2) for d in msgs])
-        klab = VGroup(*[tx(f"$k_{i + 1}$", 22, KEY).move_to(l.point_from_proportion(0.55) + UP * 0.15) for i, l in enumerate(lines)])
+        klab = VGroup(*[tx(f"$k_{i + 1}$", 24, KEY).move_to(l.point_from_proportion(0.78) + UP * 0.17) for i, l in enumerate(lines)])
         with self.vo("Fix one ciphertext c star that can actually occur. By perfect indistinguishability, every message "
                      "must be able to encrypt to c star, with the same positive probability.") as d:
             self.play(FadeIn(cstar), FadeIn(cl))
@@ -514,31 +516,31 @@ class NotPS1(VScene):
             self.play(FadeIn(q))
 
         def table(Ms, Ks):
-            rows_ = [[M(r"m \backslash k", font_size=26)] + [M(str(k), font_size=26, color=KEY) for k in Ks]]
+            rows_ = [[M(r"m \backslash k", font_size=32)] + [M(str(k), font_size=34, color=KEY) for k in Ks]]
             for m in Ms:
-                rows_.append([M(str(m), font_size=26, color=MSG)] + [M(str((m + k) % 3), font_size=26, color=CT) for k in Ks])
-            g = VGroup(*[x for r in rows_ for x in r]).arrange_in_grid(rows=len(rows_), cols=len(Ks) + 1, buff=(0.35, 0.18))
+                rows_.append([M(str(m), font_size=34, color=MSG)] + [M(str((m + k) % 3), font_size=34, color=CT) for k in Ks])
+            g = VGroup(*[x for r in rows_ for x in r]).arrange_in_grid(rows=len(rows_), cols=len(Ks) + 1, buff=(0.4, 0.22))
             return g, rows_
         parts = [((0, 1), (0, 1), r"(a) $\mathcal M{=}\{0,1\}, \mathcal K{=}\{0,1\}$",
-                  r"$m{=}1$ never gives $c{=}0$; \ $m{=}0$ does $\Rightarrow$ \textbf{not} PS", BAD),
+                  r"$m{=}1$ never gives $c{=}0$,\\ $m{=}0$ does $\Rightarrow$ \textbf{not} PS", BAD),
                  ((0, 1, 2), (0, 1, 2), r"(b) $\mathcal M{=}\{0,1,2\}, \mathcal K{=}\{0,1,2\}$",
-                  r"each $m$ hits each $c$ w.p.\ $\tfrac13$ $\Rightarrow$ \textbf{PS}", GOOD),
+                  r"each $m$ hits each $c$\\ w.p.\ $\tfrac13$ $\Rightarrow$ \textbf{PS}", GOOD),
                  ((0, 1), (0, 1, 2), r"(c) $\mathcal M{=}\{0,1\}, \mathcal K{=}\{0,1,2\}$",
-                  r"each $m$ hits each $c$ w.p.\ $\tfrac13$ $\Rightarrow$ \textbf{PS}", GOOD),
+                  r"each $m$ hits each $c$\\ w.p.\ $\tfrac13$ $\Rightarrow$ \textbf{PS}", GOOD),
                  ((0, 1, 2), (0, 1), r"(d) $\mathcal M{=}\{0,1,2\}, \mathcal K{=}\{0,1\}$",
-                  r"$|\mathcal K| = 2 < 3 = |\mathcal M|$ $\Rightarrow$ Shannon: \textbf{not} PS", BAD)]
+                  r"$|\mathcal K| = 2 < 3 = |\mathcal M|$\\ $\Rightarrow$ Shannon: \textbf{not} PS", BAD)]
         cells = VGroup()
         for i, (Ms, Ks, ttl, verdict, col) in enumerate(parts):
             g, _ = table(Ms, Ks)
-            t = tx(ttl, 26)
-            v = tx(verdict, 24, col)
+            t = tx(ttl, 30)
+            v = tx(verdict, 28, col)
             cell = VGroup(t, g, v).arrange(DOWN, buff=0.22)
             cells.add(cell)
-        cells.arrange_in_grid(rows=2, cols=2, buff=(1.0, 0.45)).next_to(q, DOWN, buff=0.35)
-        fit(cells, 13.0, 6.0)
+        cells.arrange(RIGHT, buff=0.45, aligned_edge=UP).next_to(q, DOWN, buff=0.6)
+        fit(cells, 13.2, 5.6)
         narr = [
             "Part a: messages and keys are both zero or one. Make the table of ciphertexts. Message one never produces "
-            "ciphertext zero, but message zero does, half the time. A ciphertext one message can't make and another "
+            "ciphertext zero, but message zero does, half the time. So here's a ciphertext one message can't make and another "
             "can: not perfectly secret.",
             "Part b: three messages, three keys. Every row of the table contains zero, one and two exactly once, so "
             "each message hits each ciphertext with probability one third. That doesn't depend on the message: "
@@ -588,7 +590,7 @@ class NotPS1b(VScene):
                      "comes from exactly one key, for every message, so it's perfectly secret."):
             self.play(FadeIn(c[0]), FadeIn(c[1]))
         with self.vo("Exercise one point fifteen a: messages of different lengths, padded with a prefix of the key. "
-                     "The ciphertext has the same length as the message, so it leaks the length. A one bit message can "
+                     "The ciphertext has the same length as the message, so it leaks the length. So a one bit message can "
                      "encrypt to the string zero, but a two bit message never can. Method B: not perfectly secret."):
             self.play(FadeIn(c[2]), FadeIn(c[3]))
         self.clear_all()
@@ -604,7 +606,7 @@ class Recap1(VScene):
                         r"OTP: unique key $c \oplus m$ $\Rightarrow 2^{-\ell}$. Never reuse the key.",
                         r"Not PS: Shannon ($|\mathcal K| < |\mathcal M|$) or a $c$ that $m$ can't hit but $m'$ can."], fs=30)
         fit(r, 12.8).move_to(DOWN * 0.2)
-        with self.vo("Recap. A scheme needs syntax, correctness and security, and correct doesn't mean secure. In "
+        with self.vo("Recap. Every scheme needs syntax, correctness and security, and correct doesn't mean secure. In "
                      "Vigenere, positions that share a shift leak the gap between message letters. Perfect secrecy "
                      "means the posterior equals the prior. To prove it, show the probability of hitting each "
                      "ciphertext doesn't depend on the message. The one time pad does this with a unique key, as long "

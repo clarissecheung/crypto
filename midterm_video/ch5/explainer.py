@@ -69,8 +69,9 @@ def line_id(text):
 # and add (regex, replacement) pairs here (or RESPELL.append(...) at the top of a scene file).
 RESPELL = [
     (r"\b([Ee])igen", lambda m: m.group(1) + "yegun"),     # eigen- said "EYE-jen" otherwise
-    (r"\bA (?=(times|minus|plus|transpose|inverse|squared|cubed|has|is|equals|applied|acts|maps|sends|"
-     r"stretches|v|w|x|y|b)\b)", "A-"),                                        # letter A, not the article "uh"
+    (r"\bA\b", "Eigh"),                                   # capital A = algorithm/letter/event; Kokoro says "uh" otherwise
+    (r"\bBlum\b", "Bloom"),
+    (r"\bVigenere\b", "Veezhenair"),
     (r"\b[Nn]um[Pp]y\b", "num pie"),
     (r"\bi\.i\.d\.", "I I D"),
 ]

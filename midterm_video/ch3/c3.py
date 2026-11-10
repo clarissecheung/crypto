@@ -88,7 +88,7 @@ class Fermat3(VScene):
         inv = VGroup(tx(r"\textbf{Inverses:} \ $a \cdot a^{p-2} = a^{p-1} \equiv 1$, \ so \ $a^{-1} \equiv a^{p-2} \pmod p$", 34, HL),
                      M(r"\text{e.g. } 3^{-1} \equiv 3^{5} = 243 \equiv 5 \pmod 7, \qquad 3 \cdot 5 = 15 \equiv 1 \;\checkmark", font_size=36),
                      tx(r"computed fast with repeated squaring $\Rightarrow$ inverses mod $p$ are PPT", 30, GOOD)).arrange(DOWN, buff=0.4)
-        with self.vo("A corollary: a times a to the p minus two is a to the p minus one, which is one. So a to the p "
+        with self.vo("Here's a corollary: a times a to the p minus two is a to the p minus one, which is one. So a to the p "
                      "minus two is the inverse of a. For example, the inverse of three mod seven is three to the fifth, "
                      "which is five. And repeated squaring computes it efficiently.") as d:
             for x in inv:
@@ -204,7 +204,7 @@ class QRp3(VScene):
         self.header(r"Squares mod $p$", "quadratic residues")
         d = tx(r"$y \in \mathbb Z_m^*$ is a \textbf{quadratic residue} ($y \in QR_m$) if $x^2 \equiv y$ for some $x \in \mathbb Z_m^*$", 34, HL)
         d.to_edge(UP, buff=1.15)
-        with self.vo("A quadratic residue mod m is an invertible number that is a perfect square mod m. The number x "
+        with self.vo("Now, a quadratic residue mod m is an invertible number that is a perfect square mod m. The number x "
                      "with x squared equal to y is a square root of y."):
             self.play(FadeIn(d))
         xs = VGroup(*[M(str(x), font_size=34) for x in range(1, 11)]).arrange(RIGHT, buff=0.45).move_to(UP * 1.1)
@@ -496,7 +496,7 @@ class Reduct3(VScene):
         lout = tx(r"answer for X", 26).next_to(outx, UP, buff=0.1)
         toA = Arrow(bx.get_center() + LEFT * 2.2, ax.get_left(), buff=0.05, color=GREY_B, stroke_width=3)
         frA = Arrow(ax.get_bottom(), bx.get_center() + LEFT * 2.2 + DOWN * 1.0, buff=0.05, color=GREY_B, stroke_width=3)
-        with self.vo("A reduction from problem X to problem Y is an algorithm B for X that uses any algorithm A for Y as a "
+        with self.vo("Formally, a reduction from problem X to problem Y is an algorithm B for X that uses any algorithm A for Y as a "
                      "subroutine. B turns its X instance into Y instances, feeds them to A, and turns A's answers back into "
                      "an answer for X. B can't assume anything about how A works, only that it works.") as d:
             self.play(Create(bx), FadeIn(bl), GrowArrow(inx), FadeIn(lin))

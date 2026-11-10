@@ -57,7 +57,7 @@ class BigO2(VScene):
                     tx(r"poly: \ $7$, \ $n^3 + 2n$, \ $n \log n$, \ $\sqrt n$, \ $n^{100}$", 32, GOOD),
                     tx(r"not poly: \ $2^n$, \ $n!$, \ $2^{\sqrt n}$", 32, BAD)).arrange(DOWN, buff=0.3, aligned_edge=LEFT)
         d2.next_to(d1, DOWN, buff=0.6)
-        with self.vo("A function is polynomially bounded, poly for short, if it's big O of n to some fixed power. "
+        with self.vo("We say a function is polynomially bounded, poly for short, if it's big O of n to some fixed power. "
                      "Seven, n cubed plus two n, n log n, square root of n, even n to the hundred, are all poly. Two to "
                      "the n and n factorial are not: they eventually beat every power of n."):
             self.play(FadeIn(d2[0]))
@@ -144,27 +144,31 @@ class Ex22(VScene):
         self.header("Exam-style", r"Ex.\ 2.2 = Quiz 3 Q2")
         b2 = algo(r"$B_2(x)$", [r"for $i = 1..n$:", r">$z_i := A(x)$", r"return $(z_1..z_n)$"], fs=28)
         b3 = algo(r"$B_3(x)$", [r"$z_0 := x$", r"for $i = 1..n$:", r">$z_i := A(z_{i-1})$", r"return $(z_1..z_n)$"], fs=28)
-        VGroup(b2, b3).arrange(RIGHT, buff=1.2).to_edge(UP, buff=1.15)
+        b2.move_to(LEFT * 3.6).to_edge(UP, buff=1.15)
+        b3.move_to(RIGHT * 3.0).to_edge(UP, buff=1.15)
         with self.vo("Exercise two point two, which was quiz three, question two. A is any P P T algorithm. B two calls "
                      "A n times on the same input x. B three feeds each output back in as the next input."):
             self.play(FadeIn(b2), FadeIn(b3))
-        s2 = tx(r"$B_2$: $n$ calls, each poly$(n)$ $\Rightarrow$ $n\cdot$poly$(n)$ = poly: \textbf{PPT}", 30, GOOD).next_to(b2, DOWN, buff=0.4)
-        fit(s2, 6.2)
+        s2 = VGroup(tx(r"$B_2$: $n$ calls, each poly$(n)$", 30, GOOD),
+                    tx(r"$\Rightarrow$ $n\cdot$poly$(n)$ = poly: \textbf{PPT}", 30, GOOD)).arrange(DOWN, buff=0.15)
+        s2.next_to(b2, DOWN, buff=0.4)
+        fit(s2, 5.4)
         with self.vo("B two is P P T. Each call runs on the same n bit input, so each takes polynomial time, and n of "
                      "them is still polynomial."):
             self.play(FadeIn(s2))
-        q = qframe(r"Find a PPT $A$ that makes $B_3$ \emph{not} PPT.", 34).next_to(b3, DOWN, buff=0.4)
+        q = qframe(r"Find a PPT $A$ that makes $B_3$ \emph{not} PPT.", 34)
+        fit(q, 6.0).next_to(b3, DOWN, buff=0.4)
         with self.vo("B three is the interesting one. Can you find a P P T algorithm A that makes B three slow?"):
             self.play(FadeIn(q))
         self.wait(2.5)
         self.play(FadeOut(q))
         A = algo(r"Counterexample: \ $A(z) = z \Vert z$", [r"(copy the input twice: linear time, so PPT)"], fs=28, title_color=GOOD)
-        A.next_to(b3, DOWN, buff=0.4)
+        fit(A, 6.2).next_to(b3, DOWN, buff=0.4)
         with self.vo("Let A double its input: output z concatenated with itself. That's linear time, clearly P P T."):
             self.play(FadeIn(A))
         lens = VGroup(M(r"|z_0| = n", font_size=34), M(r"|z_1| = 2n", font_size=34), M(r"|z_2| = 4n", font_size=34),
                       M(r"\cdots", font_size=34), M(r"|z_n| = 2^n \cdot n", font_size=34, color=BAD))
-        lens.arrange(RIGHT, buff=0.45).move_to(DOWN * 1.2)
+        lens.arrange(RIGHT, buff=0.45).move_to(DOWN * 1.9)
         fit(lens, 12.8)
         with self.vo("Now trace B three. The input has length n. After one round, two n. Then four n. Each round "
                      "doubles. After n rounds the last output has length two to the n times n.") as d:
@@ -343,15 +347,15 @@ class Ex26(VScene):
         narr = ["Part a, epsilon one percent. We need point nine nine to the t at most three quarters. Take logs: t at "
                 "least about twenty eight point six, so twenty nine tickets.",
                 "Part b, epsilon is n to the minus five. Use one minus x is at most e to the minus x. Then t equals n to "
-                "the five times log of four thirds is enough. A polynomial number of tickets.",
+                "the five times log of four thirds is enough. That's a polynomial number of tickets.",
                 "Part c, epsilon is two to the minus n. Now flip it around: by the union bound, the win chance is at most "
                 "t times epsilon, so reaching one quarter needs t at least two to the n over four. Not polynomial."]
         for p, t in zip(parts, narr):
             with self.vo(t):
                 self.play(FadeIn(p, shift=0.2 * RIGHT))
         les = tx(r"Non-negligible success can be boosted by repetition; negligible success cannot.", 30, HL).to_edge(DOWN, buff=0.4)
-        with self.vo("That's the whole point of the definition. A non negligible success chance can be pumped up to a "
-                     "constant with polynomially many tries. A negligible one can't."):
+        with self.vo("That's the whole point of the definition. Any non negligible success chance can be pumped up to a "
+                     "constant with polynomially many tries. But a negligible one can't."):
             self.play(FadeIn(les))
         self.clear_all()
 
@@ -365,7 +369,7 @@ class Factoring2(VScene):
         avg.to_edge(UP, buff=1.15)
         fit(avg, 12.9)
         with self.vo("For cryptography, a problem must be hard on typical random instances, not just in the worst case. "
-                     "So we must say which random numbers we factor. A random number is easy: half the time it's even. "
+                     "So we must say which random numbers we factor. But a random number is easy: half the time it's even. "
                      "The hard distribution is Blum integers: multiply two distinct random n bit primes, both "
                      "congruent to three mod four.") as d:
             for x in avg:

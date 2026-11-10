@@ -29,7 +29,7 @@ class Intro0(VScene):
                   r"$x := 5$ \quad : \quad ordinary assignment, no randomness", fs=34, buff=0.5)
         n1.move_to(UP * 0.3)
         with self.vo("Three pieces of notation first. An arrow with a dollar sign means pick uniformly at "
-                     "random from a set. A plain left arrow means run a randomized algorithm and store "
+                     "random from a set. And a plain left arrow means run a randomized algorithm and store "
                      "its output. And colon equals is ordinary assignment.") as d:
             for line in n1:
                 self.play(FadeIn(line, shift=0.2 * RIGHT))
@@ -68,7 +68,7 @@ class Counting0(VScene):
             self.play(Write(qb))
             self.play(DrawBorderThenFill(A), DrawBorderThenFill(B), FadeIn(la), FadeIn(lb))
         ans = M(r"2^n + 2^{10}", font_size=48, color=HL).to_edge(DOWN, buff=0.7)
-        with self.vo("A string has one length. Since n is at least eleven, no string is in both sets, so they "
+        with self.vo("Every string has one length. Since n is at least eleven, no string is in both sets, so they "
                      "don't overlap, and the sizes simply add: two to the n, plus two to the ten.") as d:
             self.wait(0.45 * d)
             self.play(Write(ans), Create(boxed(ans)))

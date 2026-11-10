@@ -32,7 +32,7 @@ class Intro5(VScene):
         mot = tx(r"Symmetric keys: 1000 people talking pairwise need $\binom{1000}{2} \approx 500{,}000$ shared keys.", 32)
         mot.to_edge(UP, buff=1.15)
         fit(mot, 12.9)
-        with self.vo("With symmetric encryption, every pair of people needs its own shared key. A thousand people need "
+        with self.vo("With symmetric encryption, every pair of people needs its own shared key. So a thousand people need "
                      "about half a million. Public key encryption fixes this: Bob publishes one public key that anyone can "
                      "encrypt with, and keeps a secret key for decrypting."):
             self.play(FadeIn(mot))
@@ -57,7 +57,7 @@ class Intro5(VScene):
                      tx(r"$\mathrm{Enc}(pk, m) = [x m \bmod p]$, \quad $\mathrm{Dec}(sk, c) = [x^{-1} c \bmod p] = m$ \checkmark", 32),
                      tx(r"Insecure: anyone computes $x^{-1} = x^{p-2} \bmod p$ from $pk$. \ The secret key must be \emph{hard} to derive.", 32, BAD)).arrange(DOWN, buff=0.35, aligned_edge=LEFT)
         fit(bad, 12.9)
-        with self.vo("A warning example from the notes. Make the public key a number x and a prime p, and encrypt by "
+        with self.vo("Here's a warning example from the notes. Make the public key a number x and a prime p, and encrypt by "
                      "multiplying by x mod p. Decrypting multiplies by the inverse. Correct, but useless: anyone can compute "
                      "the inverse from the public key using Fermat. The secret key must be hard to compute from the public "
                      "key, and that's where factoring comes in.") as d:
@@ -87,7 +87,7 @@ class Rabin5(VScene):
                     tx(r"Bob: principal root of 23 is 67 (Part 3) $\Rightarrow$ $\mathrm{LSB}(67) \oplus 0 = 1 = m$ \checkmark", 30, GOOD)).arrange(DOWN, buff=0.25, aligned_edge=LEFT)
         ex.next_to(g, DOWN, buff=0.45)
         fit(ex, 12.9)
-        with self.vo("A toy run with N equals seventy seven. Encrypt the bit one with r equals sixty seven, a residue. Its "
+        with self.vo("Here's a toy run with N equals seventy seven. Encrypt the bit one with r equals sixty seven, a residue. Its "
                      "LSB is one, so z is zero, and y is sixty seven squared, which is twenty three. Bob finds the principal "
                      "root of twenty three, sixty seven, and recovers one.") as d:
             for x in ex:
