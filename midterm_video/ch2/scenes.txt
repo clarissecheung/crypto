@@ -1,0 +1,11 @@
+c2.py Intro2
+c2.py BigO2
+c2.py PPT2
+c2.py Ex21
+c2.py Ex22
+c2.py ModExp2
+c2.py Negl2
+c2.py Closure2
+c2.py Ex26
+c2.py Factoring2
+c2.py Recap2

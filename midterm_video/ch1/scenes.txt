@@ -1,0 +1,13 @@
+c1.py Intro1
+c1.py Syntax1
+c1.py Classic1
+c1.py Vig1
+c1.py PS1
+c1.py Ex16
+c1.py PI1
+c1.py OTP1
+c1.py OTPLim1
+c1.py Shannon1
+c1.py NotPS1
+c1.py NotPS1b
+c1.py Recap1

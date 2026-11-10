@@ -1,0 +1,14 @@
+c3.py Intro3
+c3.py Mod3
+c3.py Fermat3
+c3.py CRT3
+c3.py ZN3
+c3.py QRp3
+c3.py Ex34
+c3.py QRN3
+c3.py Ex38
+c3.py Ex36
+c3.py Ex37
+c3.py Reduct3
+c3.py Thm33
+c3.py Recap3
