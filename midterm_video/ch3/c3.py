@@ -269,19 +269,25 @@ class Ex34(VScene):
         q = tx(r"List the quadratic residues and non-residues modulo 17.", 34).to_edge(UP, buff=1.15)
         with self.vo("Exercise three point four: list the residues and non residues mod seventeen."):
             self.play(FadeIn(q))
-        xs = VGroup(*[M(str(x), font_size=36) for x in range(1, 9)]).arrange(RIGHT, buff=0.7).move_to(UP * 1.0)
-        sq = [x * x for x in range(1, 9)]
-        ys = VGroup(*[M(f"{s}" + (rf"\to{s % 17}" if s >= 17 else ""), font_size=30, color=HL) for s in sq])
-        for a, b in zip(xs, ys):
-            b.next_to(a, DOWN, buff=0.45)
+        cols = VGroup()
+        for x in range(1, 9):
+            cols.add(VGroup(M(str(x), font_size=36), M(str(x * x), font_size=32, color=GREY_B),
+                            M(str(x * x % 17), font_size=36, color=HL)).arrange(DOWN, buff=0.35))
+        cols.arrange(RIGHT, buff=0.75).move_to(UP * 0.7 + RIGHT * 0.9)
+        labs = VGroup(tx("$x$", 30), tx("$x^2$", 30, GREY_B), tx(r"$x^2 \bmod 17$", 30, HL))
+        for lab, row_item in zip(labs, cols[0]):
+            lab.next_to(row_item, LEFT, buff=0.6).set_y(row_item.get_y())
+        labs.align_to(labs[2], RIGHT)
+        xs = VGroup(*[c[0] for c in cols])
+        ys = VGroup(*[VGroup(c[1], c[2]) for c in cols])
         with self.vo("Only square one through eight. Nine through sixteen are the negatives of these, and give the same "
                      "squares. One, four, nine, sixteen, then twenty five is eight, thirty six is two, forty nine is "
                      "fifteen, sixty four is thirteen.") as d:
-            self.play(FadeIn(xs))
+            self.play(FadeIn(xs), FadeIn(labs))
             self.play(LaggedStart(*[FadeIn(y, shift=0.2 * DOWN) for y in ys], lag_ratio=0.25), run_time=d * 0.7)
         ans = VGroup(M(r"QR_{17} = \{1, 2, 4, 8, 9, 13, 15, 16\}", font_size=40, color=GOOD),
                      M(r"\text{non-residues} = \{3, 5, 6, 7, 10, 11, 12, 14\}", font_size=40, color=BAD)).arrange(DOWN, buff=0.35)
-        ans.next_to(ys, DOWN, buff=0.7)
+        ans.next_to(cols, DOWN, buff=0.6).set_x(0)
         with self.vo("Sort them: one, two, four, eight, nine, thirteen, fifteen, sixteen are the residues. The other eight "
                      "are non residues. Eight and eight, half each, as promised."):
             self.play(Write(ans[0]))

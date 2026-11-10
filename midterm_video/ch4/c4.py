@@ -296,19 +296,21 @@ class Outro4(VScene):
         self.header("Part 4", "we can encrypt one bit")
         enc = algo(r"$\mathrm{Enc}_N(m)$ \ for $m \in \{0, 1\}$",
                    [r"$x \xleftarrow{\$} QR_N$", r"$y := [x^2 \bmod N]$", r"return $c := (\mathrm{LSB}(x) \oplus m,\ y)$"], fs=32)
-        enc.move_to(LEFT * 3.3 + UP * 0.6)
+        enc.move_to(UP * 1.4)
         with self.vo("Here's the payoff. To encrypt one bit m, pick a random residue x, square it, and send y, together "
                      "with m XOR the LSB of x."):
             self.play(FadeIn(enc))
-        pts = VGroup(tx(r"\textbf{Correct:} with $p, q$, Bob finds the \emph{unique} principal root $x$, then LSB$(x) \oplus z = m$.", 30),
-                     tx(r"\textbf{Secure:} LSB$(x)$ looks like a fair coin to Eve, so it acts as a one-time pad on $m$.", 30)).arrange(DOWN, buff=0.4, aligned_edge=LEFT)
-        pts.next_to(enc, RIGHT, buff=0.5)
-        fit(pts, 6.2)
+        pts = VGroup(tx(r"\textbf{Correct:} with $p, q$, Bob finds the \emph{unique} principal root $x$,", 30),
+                     tx(r"then XORs $\mathrm{LSB}(x)$ off the first part to get $m$.", 30),
+                     tx(r"\textbf{Secure:} LSB$(x)$ looks like a fair coin to Eve,", 30),
+                     tx(r"\qquad so it acts as a one-time pad on the bit $m$.", 30)).arrange(DOWN, buff=0.2, aligned_edge=LEFT)
+        pts.next_to(enc, DOWN, buff=0.6)
+        fit(pts, 12.6)
         with self.vo("It fixes both problems. Correctness: Bob, knowing p and q, finds the unique principal root, so he "
                      "knows the LSB and can XOR it off. Security: to Eve, that LSB is as good as a fair coin, so it's a one "
                      "time pad on the bit m. Part five makes this precise."):
-            self.play(FadeIn(pts[0]))
-            self.play(FadeIn(pts[1]))
+            self.play(FadeIn(pts[0]), FadeIn(pts[1]))
+            self.play(FadeIn(pts[2]), FadeIn(pts[3]))
         self.clear_all()
         r = recap_list([r"LSB of ``the'' root is meaningless: $x$ and $N - x$ have opposite parity.",
                         r"Principal root = the unique root in $QR_N$ (Blum $N$).",
